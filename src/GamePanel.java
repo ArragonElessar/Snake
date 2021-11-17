@@ -150,30 +150,39 @@ public class GamePanel extends JPanel implements ActionListener {
         g.fillOval(fruitPosX, fruitPosY, TILE_SIZE, TILE_SIZE);
     }
 
-    @Override
+    // implements actionPerformed method from ActionListener class
     public void actionPerformed(ActionEvent e) {
+        // for every action event, all snakes have to be moved
         this.move();
+
+        // the for loops check if any snakes have self collided
         for (int i = 0; i < playerNumber; i++) {
             for (int j = 0; j < playerNumber; j++) {
                 snakes[i].selfCollision(snakes[j]);
             }
         }
 
+        // checks if any snake has eaten a fruit. If yes, a new fruit is spawned
         for (int i = 0; i < playerNumber; i++) {
             if (snakes[i].checkFood(fruitPosX, fruitPosY)) {
                 this.spawnFruit();
             }
 
         }
+        // repaints the screen, so that the updated frame is displayed
         repaint();
     }
 
+    // inner class to handle all keyboard inputs
     public class myKeyAdapter extends KeyAdapter {
 
+        // implements keyPressed method from KeyAdapter class
         @Override
         public void keyPressed(KeyEvent e) {
-
+            // key event e is the event of a keyboard key being pressed
             switch (e.getKeyCode()) {
+                // get keycode fetches what key has been pressed from the user keyboard
+                // the switch case sets the new direction according to the keypress
             case KeyEvent.VK_LEFT:
                 snakes[0].setDirection('L');
                 break;
@@ -190,6 +199,8 @@ public class GamePanel extends JPanel implements ActionListener {
             default:
                 break;
             }
+
+            // same piee of code for the second player
             switch (e.getKeyCode()) {
             case KeyEvent.VK_A:
                 snakes[1].setDirection('L');
