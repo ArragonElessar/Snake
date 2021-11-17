@@ -8,8 +8,11 @@ public class GamePanel extends JPanel implements ActionListener {
     // max height, max width set the size of game window
     // tile size defines the side of a square tile
     // delay (ms) in which the frame updates
-    public static final int MAX_HEIGHT = 800, MAX_WIDTH = 800, TILE_SIZE = 25, DELAY = 100;
-
+    
+    Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+    public static int max_height, max_width, tile_size;
+    //public static final int max_height = 800, max_width = 800, tile_size = 25, DELAY = 100;
+    public static int delay = 100;
     // currently unused
     // private static int tileNumber = MAX_HEIGHT * MAX_WIDTH / TILE_SIZE;
 
@@ -35,8 +38,12 @@ public class GamePanel extends JPanel implements ActionListener {
     public int playerNumber;
 
     GamePanel() {
+        max_height = (int)(size.getHeight()/2);
+        max_width = max_height;
+        tile_size = (int)(max_height * 0.03125);
+
         // set the size of JComponent to max_width and max height
-        this.setPreferredSize(new Dimension(MAX_WIDTH, MAX_HEIGHT));
+        this.setPreferredSize(new Dimension(max_width, max_height));
 
         // set bg color to black
         this.setBackground(Color.BLACK);
@@ -49,7 +56,7 @@ public class GamePanel extends JPanel implements ActionListener {
         random = new Random();
 
         // start a game
-        startGame(2);
+        startGame(1);
 
     }
 
@@ -65,7 +72,7 @@ public class GamePanel extends JPanel implements ActionListener {
             // assign player number
             playerNumber = 1;
             // initialse and start timer
-            timer = new Timer(DELAY, this);
+            timer = new Timer(delay, this);
             timer.start();
 
             // generate new snake
@@ -77,13 +84,13 @@ public class GamePanel extends JPanel implements ActionListener {
             // loop through all snakes
             for (int j = 0; j < i; j++) {
                 // generate snake head on random square inside our game surface
-                snakes[j] = new Snake(random.nextInt((int) (MAX_HEIGHT / TILE_SIZE)) * TILE_SIZE,
-                        random.nextInt((int) (MAX_WIDTH / TILE_SIZE)) * TILE_SIZE);
+                snakes[j] = new Snake(random.nextInt((int) (max_height / tile_size)) * tile_size,
+                        random.nextInt((int) (max_width / tile_size)) * tile_size);
             }
             // set player number
             playerNumber = i;
             // initialise and start timer
-            timer = new Timer(DELAY, this);
+            timer = new Timer(delay, this);
             timer.start();
         }
     }
@@ -100,8 +107,8 @@ public class GamePanel extends JPanel implements ActionListener {
     // function to randomly generate fruits in the game
     public void spawnFruit() {
         // set a random (x,y) within game boundaries
-        fruitPosY = random.nextInt((int) (MAX_HEIGHT / TILE_SIZE)) * TILE_SIZE;
-        fruitPosX = random.nextInt((int) (MAX_WIDTH / TILE_SIZE)) * TILE_SIZE;
+        fruitPosY = random.nextInt((int) (max_height / tile_size)) * tile_size;
+        fruitPosX = random.nextInt((int) (max_width / tile_size)) * tile_size;
     }
 
     // Swing part below
@@ -118,11 +125,11 @@ public class GamePanel extends JPanel implements ActionListener {
     public void draw(Graphics g) {
         
         // the below two for loops make the grid lines
-        for (int i = 0; i < (MAX_WIDTH / TILE_SIZE); i++) {
-            g.drawLine(i * TILE_SIZE, 0, i * TILE_SIZE, MAX_HEIGHT);
+        for (int i = 0; i < (max_width / tile_size); i++) {
+            g.drawLine(i * tile_size, 0, i * tile_size, max_height);
         }
-        for (int i = 0; i < (MAX_HEIGHT / TILE_SIZE); i++) {
-            g.drawLine(0, i * TILE_SIZE, MAX_HEIGHT, i * TILE_SIZE);
+        for (int i = 0; i < (max_height / tile_size); i++) {
+            g.drawLine(0, i * tile_size, max_height, i * tile_size);
         }
 
         // this for loop is for drawing all the snakes on the screen
@@ -135,19 +142,19 @@ public class GamePanel extends JPanel implements ActionListener {
                 // i = 0 --> this is the snake's head (red color)
                 if (i == 0) {
                     g.setColor(Color.red);
-                    g.fillRect(snakes[j].xPos[i], snakes[j].yPos[i], TILE_SIZE, TILE_SIZE);
+                    g.fillRect(snakes[j].xPos[i], snakes[j].yPos[i], tile_size, tile_size);
                 } 
                 // i != 0 --> this is the snake's body (green color)
                 else {
                     g.setColor(Color.green);
-                    g.fillRect(snakes[j].xPos[i], snakes[j].yPos[i], TILE_SIZE, TILE_SIZE);
+                    g.fillRect(snakes[j].xPos[i], snakes[j].yPos[i], tile_size, tile_size);
                 }
 
             }
         }
         // food is blue colored
         g.setColor(Color.blue);
-        g.fillOval(fruitPosX, fruitPosY, TILE_SIZE, TILE_SIZE);
+        g.fillOval(fruitPosX, fruitPosY, tile_size, tile_size);
     }
 
     // implements actionPerformed method from ActionListener class

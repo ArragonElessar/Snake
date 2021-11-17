@@ -32,23 +32,23 @@ public class Snake {
 
             // conditions for checking if snake has exited any boundaries
             // if yes, snake will reappear from the other side of the game surface
-            if (xPos[0] > GamePanel.MAX_WIDTH - 25) {
+            if (xPos[0] > GamePanel.max_width - GamePanel.tile_size) {
                 // exited from right
                 xPos[0] = 0;
 
             }
             if (xPos[0] < 0) {
                 // exited from left
-                xPos[0] = (GamePanel.MAX_WIDTH - 25);
+                xPos[0] = (GamePanel.max_width - GamePanel.tile_size);
 
             }
-            if (yPos[0] > GamePanel.MAX_HEIGHT - 25) {
+            if (yPos[0] > GamePanel.max_height - GamePanel.tile_size) {
                 // exited from bottom
                 yPos[0] = 0;
             }
             if (yPos[0] < 0) {
                 // exited from top
-                yPos[0] = (GamePanel.MAX_HEIGHT - 25);
+                yPos[0] = (GamePanel.max_height - GamePanel.tile_size);
             }
             System.out.println(xPos[0] + " " + yPos[0]);
 
@@ -57,19 +57,19 @@ public class Snake {
         switch (this.direction) {
         case 'R':
             // right
-            xPos[0] += GamePanel.TILE_SIZE;
+            xPos[0] += GamePanel.tile_size;
             break;
         case 'L':
             // left
-            xPos[0] -= GamePanel.TILE_SIZE;
+            xPos[0] -= GamePanel.tile_size;
             break;
         case 'U':
             // up
-            yPos[0] -= GamePanel.TILE_SIZE;
+            yPos[0] -= GamePanel.tile_size;
             break;
         case 'D':
             // down
-            yPos[0] += GamePanel.TILE_SIZE;
+            yPos[0] += GamePanel.tile_size;
             break;
         default:
             break;
