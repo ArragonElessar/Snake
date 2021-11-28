@@ -38,9 +38,9 @@ public class GamePanel extends JPanel implements ActionListener {
     public int playerNumber;
 
     GamePanel() {
-        max_height = (int)(size.getHeight()/2);
+        max_height = (int) (32*(Math.round(size.getHeight()/(2*32))));
         max_width = max_height;
-        tile_size = (int)(max_height * 0.03125);
+        tile_size = (int)(max_height / 32);
 
         // set the size of JComponent to max_width and max height
         this.setPreferredSize(new Dimension(max_width, max_height));
